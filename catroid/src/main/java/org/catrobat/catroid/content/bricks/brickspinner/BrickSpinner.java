@@ -24,6 +24,7 @@
 package org.catrobat.catroid.content.bricks.brickspinner;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +45,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -194,6 +196,10 @@ public class BrickSpinner<T extends Nameable> implements AdapterView.OnItemSelec
 			return (ScriptFragment) currentFragment;
 		}
 		return null;
+	}
+
+	public void setSpinnerFontColor(Context context, int color) {
+		spinner.getBackground().setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_ATOP);
 	}
 
 	@VisibleForTesting

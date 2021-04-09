@@ -29,20 +29,31 @@ import android.widget.LinearLayout;
 
 import org.catrobat.catroid.ProjectManager;
 import org.catrobat.catroid.R;
+import org.catrobat.catroid.common.Nameable;
 import org.catrobat.catroid.content.Script;
 import org.catrobat.catroid.content.Sprite;
 import org.catrobat.catroid.content.UserDefinedScript;
 import org.catrobat.catroid.content.actions.ScriptSequenceAction;
+import org.catrobat.catroid.content.bricks.brickspinner.BrickSpinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-public class UserDefinedReceiverBrick extends ScriptBrickBaseType {
+public class UserDefinedReceiverBrick extends ScriptBrickBaseType implements
+		BrickSpinner.OnItemSelectedListener<UserDefinedReceiverBrick.ScreenRefreshOption> {
 
 	private static final long serialVersionUID = 1L;
 
 	private UserDefinedScript userDefinedScript;
 	private LinearLayout userBrickSpace;
 	private Brick userDefinedBrick;
+
+	private static final int WITHOUT_SCREEN_REFRESH = 0;
+	private static final int WITH_SCREEN_REFRESH = 1;
+	public int screenRefreshSelection = WITH_SCREEN_REFRESH;
 
 	public UserDefinedReceiverBrick(UserDefinedScript userDefinedScript) {
 		this.userDefinedScript = userDefinedScript;
@@ -90,7 +101,39 @@ public class UserDefinedReceiverBrick extends ScriptBrickBaseType {
 		if (userDefinedBrick != null) {
 			userBrickSpace.addView(userDefinedBrick.getView(context));
 		}
+		setUpSpinner(context);
 		return view;
+	}
+
+	private void setUpSpinner(Context context) {
+		List<Nameable> items = new ArrayList<>();
+		items.add(new ScreenRefreshOption(context.getString(R.string.brick_user_defined_without_screen_refreshing), WITHOUT_SCREEN_REFRESH));
+		items.add(new ScreenRefreshOption(context.getString(R.string.brick_user_defined_with_screen_refreshing), WITH_SCREEN_REFRESH));
+		BrickSpinner<ScreenRefreshOption> spinner = new BrickSpinner<>(R.id.brick_set_screen_refresh_spinner, view, items);
+		spinner.setSpinnerFontColor(context, R.color.dark_blue);
+		spinner.setSelection(screenRefreshSelection);
+		spinner.setOnItemSelectedListener(new BrickSpinner.OnItemSelectedListener<ScreenRefreshOption>() {
+
+			@Override
+			public void onItemSelected(Integer spinnerId, @Nullable ScreenRefreshOption item) {
+				if (item != null) {
+					screenRefreshSelection = item.screenRefreshStyle;
+					userDefinedScript.setScreenRefresh(screenRefreshSelection == WITH_SCREEN_REFRESH);
+				}
+			}
+
+			@Override
+			public void onEditOptionSelected(Integer spinnerId) {
+			}
+
+			@Override
+			public void onStringOptionSelected(Integer spinnerId, String string) {
+			}
+
+			@Override
+			public void onNewOptionSelected(Integer spinnerId) {
+			}
+		});
 	}
 
 	@Override
@@ -100,5 +143,41 @@ public class UserDefinedReceiverBrick extends ScriptBrickBaseType {
 
 	@Override
 	public void addActionToSequence(Sprite sprite, ScriptSequenceAction sequence) {
+	}
+
+	@Override
+	public void onNewOptionSelected(Integer spinnerId) {
+	}
+
+	@Override
+	public void onEditOptionSelected(Integer spinnerId) {
+	}
+
+	@Override
+	public void onStringOptionSelected(Integer spinnerId, String string) {
+	}
+
+	@Override
+	public void onItemSelected(Integer spinnerId, @Nullable @org.jetbrains.annotations.Nullable ScreenRefreshOption item) {
+	}
+
+	static class ScreenRefreshOption implements Nameable {
+		private String name;
+		private int screenRefreshStyle;
+
+		ScreenRefreshOption(String name, int screenRefreshStyle) {
+			this.name = name;
+			this.screenRefreshStyle = screenRefreshStyle;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public void setName(String name) {
+			this.name = name;
+		}
 	}
 }

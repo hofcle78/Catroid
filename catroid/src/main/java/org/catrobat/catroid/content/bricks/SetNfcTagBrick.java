@@ -71,7 +71,8 @@ public class SetNfcTagBrick extends FormulaBrick implements
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_mime_media), BrickValues.TNF_MIME_MEDIA));
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_http), BrickValues.TNF_WELL_KNOWN_HTTP));
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_https), BrickValues.TNF_WELL_KNOWN_HTTPS));
-		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_sms), BrickValues.TNF_WELL_KNOWN_SMS));
+		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_sms),
+				BrickValues.TNF_WELL_KNOWN_SMS));
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_tel), BrickValues.TNF_WELL_KNOWN_TEL));
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_well_known_mailto), BrickValues.TNF_WELL_KNOWN_MAILTO));
 		items.add(new NfcTypeOption(context.getString(R.string.tnf_external_type), BrickValues.TNF_EXTERNAL_TYPE));

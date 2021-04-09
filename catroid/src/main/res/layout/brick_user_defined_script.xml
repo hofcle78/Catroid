@@ -59,9 +59,15 @@
         <org.catrobat.catroid.ui.BrickLayout
             style="@style/BrickContainer.Script.As">
             <include layout="@layout/icon_brick_category_userbrick"/>
+            <Spinner
+                android:theme="@style/BrickText.SingleLine.UserDefinedScript"
+                android:id="@+id/brick_set_screen_refresh_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textDirection="locale"/>
             <TextView
                 style="@style/BrickText.SingleLine.UserDefinedScript"
-                android:text="@string/brick_user_defined_script_as" />
+                android:text="@string/brick_user_defined_script_screen_refresh_as" />
         </org.catrobat.catroid.ui.BrickLayout>
 
     </LinearLayout>
